@@ -1091,6 +1091,54 @@ paths:
                 example: { "code": 200, "data": { "LastSeen": "contacts" }, "success": true }
         400:
           description: Invalid privacy setting name or value
+  /user/profile/name:
+    post:
+      tags:
+        - User
+      summary: Set profile name
+      description: Changes the account's own profile (push) name, at most 25 characters. Contacts who saved the number keep seeing their own name for it.
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              example: { "Name": "My Business" }
+      responses:
+        200:
+          description: Profile name set
+          content:
+            application/json:
+              schema:
+                example: { "code": 200, "data": { "Details": "Profile name set", "Name": "My Business" }, "success": true }
+        400:
+          description: Missing or too long Name
+        409:
+          description: App state keys not synced from the phone yet; retry after the initial sync
+  /user/profile/photo:
+    post:
+      tags:
+        - User
+      summary: Set or remove profile photo
+      description: Changes the account's own profile photo. Image is a JPEG data URL; an empty Image removes the current photo.
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              example: { "Image": "data:image/jpeg;base64,/9j/4AAQSkZJRg..." }
+      responses:
+        200:
+          description: Profile photo set or removed
+          content:
+            application/json:
+              schema:
+                example: { "code": 200, "data": { "Details": "Profile photo set", "PictureID": "1700000000" }, "success": true }
+        400:
+          description: Image is not a JPEG data URL
   /chat/delete:
     post:
       tags:

@@ -142,6 +142,8 @@ func (s *server) routes() {
 	s.router.Handle("/user/lid/{jid}", c.Then(s.GetUserLID())).Methods("GET")
 	s.router.Handle("/user/privacy", c.Then(s.GetPrivacySettings())).Methods("GET")
 	s.router.Handle("/user/privacy", c.Then(s.SetPrivacySetting())).Methods("POST")
+	s.router.Handle("/user/profile/name", c.Then(s.SetProfileName())).Methods("POST")
+	s.router.Handle("/user/profile/photo", c.Then(s.SetProfilePhoto())).Methods("POST")
 
 	s.router.Handle("/chat/presence", c.Then(s.ChatPresence())).Methods("POST")
 	s.router.Handle("/chat/markread", c.Then(s.MarkRead())).Methods("POST")
