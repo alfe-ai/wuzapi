@@ -846,6 +846,62 @@ Response:
 
 ---
 
+## Set Profile Name
+
+Changes the account's own profile (push) name, the name shown to people who haven't saved the number. Contacts who saved the number keep seeing their own name for it. At most 25 characters.
+
+Endpoint: _/user/profile/name_
+
+Method: **POST**
+
+```
+curl -s -X POST -H 'Token: 1234ABCD' -H 'Content-Type: application/json' --data '{"Name":"My Business"}' http://localhost:8080/user/profile/name
+```
+
+Response:
+
+```json
+{
+  "code": 200,
+  "data": {
+    "Details": "Profile name set",
+    "Name": "My Business"
+  },
+  "success": true
+}
+```
+
+Returns `409` if the session hasn't received its app state keys from the phone yet (shortly after pairing); retry once the initial sync is done.
+
+---
+
+## Set Profile Photo
+
+Changes the account's own profile photo. `Image` is a JPEG data URL; send an empty `Image` to remove the current photo.
+
+Endpoint: _/user/profile/photo_
+
+Method: **POST**
+
+```
+curl -s -X POST -H 'Token: 1234ABCD' -H 'Content-Type: application/json' --data '{"Image":"data:image/jpeg;base64,/9j/4AAQSkZJRg..."}' http://localhost:8080/user/profile/photo
+```
+
+Response:
+
+```json
+{
+  "code": 200,
+  "data": {
+    "Details": "Profile photo set",
+    "PictureID": "1700000000"
+  },
+  "success": true
+}
+```
+
+---
+
 ## Block User
 
 Blocks a WhatsApp user and returns the updated blocklist.
